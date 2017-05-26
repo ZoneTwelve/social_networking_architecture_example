@@ -9,5 +9,5 @@ var httpServer = http.createServer(app);
 var httpsServer = https.createServer(ssl.options, app);
 httpServer.listen(app.get('port'));
 httpsServer.listen(app.get('httpsport'));
-var socketServer = require('socket.io')(server);
-var socket = require('../websocket.js')(socketServer);
+var socket = require('socket.io')(httpsServer);
+var socketServer = require('../websocket.js')(socket);

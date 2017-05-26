@@ -9,7 +9,6 @@ var helmet = require('helmet');
 
 
 var index = require('./routes/index');
-var users = require('./routes/users');
 
 var app = express();
 
@@ -18,6 +17,18 @@ app.set('view engine', 'ejs');
 
 app.disable('x-powered-by');
 
+// Set the header based on a condition
+app.use(helmet.hsts({
+  maxAge: 1234000,
+  setIf: function (req, res) {
+    return req.secure || (req.headers['x-forwarded-proto'] === 'https')
+  }
+}))
+// ALWAYS set the header
+app.use(helmet.hsts({
+  maxAge: 1234000,
+  force: true
+}))
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(session({
 	secret:'recommand 128 bytes random string',
