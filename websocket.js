@@ -12,13 +12,6 @@ module.exports = function(socket){
 			for(var i=0;i<user.length;i++)
 				user[i].emit('chat', "<b>" + client.client.id+"</b> : "+data.replace(/</g,"&lt"));
 		})
-		client.on('developer', function(data){
-			switch(data.command){
-				case "all":return console.log(user);
-				case "some":return console.log(user[data.i]);
-				case "command":return eval(data.shell);
-			}
-		})
 		//disconnect use
 		client.on('disconnect', function(data){
 			// console.log(client.client.id);
