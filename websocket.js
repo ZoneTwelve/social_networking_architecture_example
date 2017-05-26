@@ -1,5 +1,4 @@
-module.exports = function(server){
-	var socket = require('socket.io')(server);
+module.exports = function(socket){
 	socket.on('connection', function(client){
 		client.emit('news', {msg: '為同婚合法化歡呼~~'});
 		client.on('my other event', function (data) {
