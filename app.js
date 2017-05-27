@@ -18,6 +18,22 @@ app.set('view engine', 'ejs');
 app.disable('x-powered-by');
 
 // Set the header based on a condition
+var setupSession = function() {
+    var sessionConfig = {
+        secret: environmentVars.cookie.secret,
+        name: environmentVars.cookie.name,
+        maxAge: environmentVars.cookie.expiry,
+        domain: environmentVars.cookie.domain,
+        httpOnly: true,            
+        secureProxy: environmentVars.cookie.secure, // true when using https
+        signed: true,
+        cookie: {
+            secure: environmentVars.cookie.secure, // true when using https
+        }
+    };
+    app.set('trust proxy', 1); // Just added this, still no luck
+    app.use(session(sessionConfig));
+};
 app.use(helmet.hsts({
   maxAge: 1234000,
   setIf: function (req, res) {
